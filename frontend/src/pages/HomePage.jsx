@@ -1,3 +1,7 @@
+/**
+ * HomePage.jsx
+**/
+
 import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/productApi.js';
 import ProductCard from '../components/ProductCard.jsx';

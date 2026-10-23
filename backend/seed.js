@@ -1,6 +1,14 @@
-import mongoose from 'mongoose';
+/**
+ * seed.js
+ * to inject sample data in database
+ * 
+ * Terminal nundi direct ga run chese scripts (server.js, seed.js)
+ * ki dotenv.config() undali
+**/
+
 import dotenv from 'dotenv';
-import Product from './models/product.js';
+import { connectDB } from './config/db.js'
+import Product from './models/product.model.js';
 
 dotenv.config();
 
@@ -11,7 +19,7 @@ const products = [
 ];
 
 async function seed() {
-  await mongoose.connect(process.env.MONGO_URI);
+  await connectDB();
   await Product.deleteMany({});
   await Product.insertMany(products);
   console.log('Seeded.');

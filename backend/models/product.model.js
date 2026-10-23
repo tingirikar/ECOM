@@ -1,7 +1,7 @@
 /**
- *  Product Schema
+ *  product.model.js
  * 
- *  mongoose.Schema()
+ *  mongoose.Schema() // scema ante structure / blueprint
  *  mongoose.model()
 **/
 
@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  price: { type: String, required: true },
+  price: { type: Number, required: true },
   image: { type: String, required: true }
 });
 
