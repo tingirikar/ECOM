@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/productApi.js';
 import ProductCard from '../components/ProductCard.jsx';
 
-function HomePage() {
+function HomePage({ onAddToCart }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,11 @@ function HomePage() {
       <h1>Products</h1>
       <div className="product-grid">
         {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
+          <ProductCard 
+            key={product._id} 
+            product={product}
+            onAddToCart={onAddToCart}
+          />
         ))}
       </div>
     </div>
