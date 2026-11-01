@@ -1,5 +1,6 @@
 /**
  *  server.js
+ *  BACKEND PORT : 5000 (default)
 **/
 
 import path from 'path';
@@ -14,13 +15,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// it means: "it's ok!, trust request from frontend (3000 port)"
+app.use(cors({ origin: 'http://localhost:3000' }));
+
 app.use(express.json()); // converts json body into javascript object
-app.use(errorHandler); // global error handling
+
+app.use(errorHandler); // error handling
+
 app.use('/images', express.static(path.join(
   import.meta.dirname, '../assets/images'
 )));
+
 app.use('/api/products', productRoutes);
+
+app.use('/api/auth', authRoutes);
 
 async function startServer() {
   try {
