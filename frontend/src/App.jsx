@@ -4,9 +4,11 @@
 
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import Navbar from './components/Navbar.jsx';
 import HomePage from './pages/HomePage.jsx';
 import CartPage from './pages/CartPage.jsx';
+import Profile from './pages/ProfilePage.jsx';
 
 // this is basically how our webpage looks
 function App() {
@@ -33,6 +35,10 @@ function App() {
         <Route 
           path="/cart" 
           element={<CartPage cart={cart} onRemoveFromCart={removeFromCart} />} 
+        />
+        <Route 
+          path="/profile"
+          element={<ProfilePage />}
         />
       </Routes>
 

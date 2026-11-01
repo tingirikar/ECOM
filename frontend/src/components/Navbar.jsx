@@ -1,8 +1,9 @@
 /**
  * Navbar.jsx
  * 
- * to go to cart button
- * to go to home button
+ * cart button
+ * home button
+ * auth button
  * 
 **/
 
@@ -17,6 +18,9 @@ function Navbar({ cartCount }) {
       <Link to="/cart" className="nav-cart-btn">
         🛒 Cart
         <span className="cart-badge">{cartCount}</span>
+      </Link>
+      <Link to="/profile" className="nav-profile-btn">
+        😂 Profile
       </Link>
     </nav>
   )

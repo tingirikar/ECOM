@@ -20,7 +20,7 @@ export async function login(req, res) {
   const user = await User.findOne({ username });
 
   if (!user) {
-    return res.send(401).json({
+    return res.status(401).json({
       success: false,
       message: 'Invalid credentials'
     });
@@ -38,7 +38,7 @@ export async function login(req, res) {
   const token = jwt.sign(
     { id: user._id },       // PAYLOAD: data to put inside token
     process.env.JWT_SECRET, // SECRET
-    { expireIn: '7d' }
+    { expiresIn: '7d' }
   )
 
   res.json({ success: true, token });
