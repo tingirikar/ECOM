@@ -2,7 +2,9 @@
  * authApi.js
 **/
 
-const AUTH_API_URL = 'http://localhost:5000/api/auth';
+import { API_URL } from './config.js';
+
+const AUTH_API_URL = `${API_URL}/api/auth`;
 
 export async function loginUser(username, password) {
   const res = await fetch(`${AUTH_API_URL}/login`, {

@@ -3,12 +3,13 @@
 **/
 
 import './CartProductCard.css';
+import { API_URL } from '../api/config.js';
 
 function CartProductCard({ product, quantity, onIncrease, onDecrease, onRemove }) {
   return (
     <div className="cart-card">
 
-      <img src={`/images/${product.image}`} />
+      <img src={`${API_URL}/images/${product.image}`} />
 
       <div className="cart-card-info">
         <h4>{product.name}</h4>
@@ -23,7 +24,7 @@ function CartProductCard({ product, quantity, onIncrease, onDecrease, onRemove }
 
       <button className="mini-card-remove" onClick={onRemove}>🗑️</button>
     </div>
-  )
+  );
 }
 
 export default CartProductCard;

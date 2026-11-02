@@ -17,7 +17,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // it means: "it's ok!, trust request from vite frontend (5173 port)"
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    process.env.CLIENT_URL
+  ]
+}));
 
 app.use(express.json()); // converts json body into javascript object
 
