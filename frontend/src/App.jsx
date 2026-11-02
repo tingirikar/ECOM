@@ -2,48 +2,73 @@
  * App.jsx
 **/
 
-import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 
-import Navbar from './components/Navbar.jsx';
-import HomePage from './pages/HomePage.jsx';
-import CartPage from './pages/CartPage.jsx';
-import Profile from './pages/ProfilePage.jsx';
+import { useAuth } from './hooks/useAuth.js';
+import { useCart } from './hooks/useCart.js';
 
-// this is basically how our webpage looks
+import Navbar      from './components/Navbar.jsx';
+import HomePage    from './pages/HomePage.jsx';
+import CartPage    from './pages/CartPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
+import AuthPage    from './pages/AuthPage.jsx';
+
 function App() {
 
-  const [cart, setCart] = useState([]);
+  const { user, handleLogin, handleLogout } = useAuth();
+  const {
+    activeCart, 
+    mergeOnLogin,
+    clearUserCart,
+    addToCart,
+    increaseQty,
+    decreaseQty,
+    removeFromCart
+  }  = useCart(user);
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
+  const onLoginSuccess = (userData, token) => {
+    handleLogin(userData, token);
+    mergeOnLogin(userData.username);
   };
 
-  const removeFromCart = (indexToRemove) => {
-    setCart(cart.filter((_, index) => index !== indexToRemove));
+  const onLogout = () => {
+    handleLogout();
+    clearUserCart();
   };
-
+  
   return (
     <div>
-      <Navbar cartCount={cart.length} />
+      <Navbar cartCount={activeCart.length} user={user} />
 
       <Routes>
-        <Route 
-          path="/" 
-          element={<HomePage onAddToCart={addToCart} />} 
-        />
-        <Route 
-          path="/cart" 
-          element={<CartPage cart={cart} onRemoveFromCart={removeFromCart} />} 
-        />
-        <Route 
-          path="/profile"
-          element={<ProfilePage />}
-        />
-      </Routes>
 
+        <Route path="/" element={
+          <HomePage onAddToCart={addToCart} />
+        } />
+
+        <Route path="/cart" element={
+          <CartPage 
+            cart={activeCart}
+            onRemoveFromCart={removeFromCart}
+            onIncreaseQty={increaseQty}
+            onDecreaseQty={decreaseQty}
+          />
+        } />
+        <Route path="/profile" element={
+          user
+            ? <ProfilePage user={user} onLogout={onLogout} />
+            : <Navigate to="/auth/login" replace />
+        } />
+
+        <Route path="/auth/login" element={
+          user
+            ? <Navigate to="/profile" replace />
+            : <AuthPage onLoginSuccess={onLoginSuccess} />
+        } />
+
+      </Routes>
     </div>
-  )
+  );
 }
 
 export default App;

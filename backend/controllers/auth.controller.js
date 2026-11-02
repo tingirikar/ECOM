@@ -6,11 +6,27 @@ import User from '../models/user.model.js';
 export async function register(req, res) {
   const { username, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
-  await User.create({ username, password: hashed });
-  res.status(201).json({
-    success: true,
-    message: 'Registered!'
-  });
+
+  try {
+    await User.create({ username, password: hashed });
+    res.status(201).json({
+      success: true,
+      message: 'Registered!'
+    });
+  }
+  catch (err) {
+    if (err.code === 11000) {
+      // 11000 = MongoDB's code for 'duplicate unique field'
+      return res.status(400).json({
+        success: false,
+        message: 'Username is already taken'
+      });
+    }
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong'
+    });
+  }
 }
 
 // LOGIN
@@ -41,6 +57,9 @@ export async function login(req, res) {
     { expiresIn: '7d' }
   )
 
-  res.json({ success: true, token });
-
+  res.json({ 
+    success: true, 
+    token,
+    user: { id: user._id, username: user.username }
+  });
 }

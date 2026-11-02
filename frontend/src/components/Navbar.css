@@ -1,0 +1,46 @@
+/**
+ * Navbar.css
+ * 
+**/
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #1e1e2e;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #cdd64f;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.nav-link:hover {
+  background: #313244;
+}
+
+.nav-active {
+  background: #894bfa;
+  color: #1e1e2e;
+  font-weight: 700;
+}
+
+.cart-badge {
+  display: inline-block;
+  background: #f38ba8;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 6px;
+}

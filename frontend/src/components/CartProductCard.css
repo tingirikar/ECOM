@@ -1,0 +1,84 @@
+/**
+ * CartProductCard.css
+**/
+
+.cart-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #313244;
+  border: 1px solid #45475a;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+
+.cart-card img {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  background: #1e1e2e;
+  border-radius: 6px;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+.cart-card-info {
+  flex: 1;
+}
+
+.cart-card-info h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cart-card-info p {
+  font-size: 0.85rem;
+  color: #a6a3a1;
+  margin-top: 0.2rem;
+}
+
+.mini-card-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mini-card-qty button {
+  background: #1e1e2e;
+  border: 1px solid #45475a;
+  color: #cdd6f4;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mini-card-qty button:hover {
+  background: #45475a;
+}
+
+.mini-card-qty button:hover {
+  background: #45475a;
+}
+
+.mini-card-qty span {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.mini-card-remove {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.mini-card-remove:hover {
+  opacity: 1;
+  background: #45253b;
+}
