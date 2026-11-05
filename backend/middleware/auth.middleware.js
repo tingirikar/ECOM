@@ -6,8 +6,7 @@
 import jwt from 'jsonwebtoken';
 
 export function requireAuth(req, res, next) {
-  const authHeader = req.headers.authorization;
-  const token = authHeader?.split(' ')[1]; // ?. optional chaining (when undefined => undefined)
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({

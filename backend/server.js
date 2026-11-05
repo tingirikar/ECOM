@@ -7,10 +7,12 @@ import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 import { connectDB } from './config/db.js';
 import { errorHandler } from './middleware/error.middleware.js';
-import productRoutes from './routes/product.route.js';
 import authRoutes from './routes/auth.route.js';
+import productRoutes from './routes/product.route.js';
 
 dotenv.config();
 const app = express();
@@ -21,20 +23,18 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     process.env.CLIENT_URL
-  ]
+  ],
+  credentials: true
 }));
-
 app.use(express.json()); // converts json body into javascript object
+app.use(cookieParser());
 
 app.use('/images', express.static(path.join(
   import.meta.dirname, '../assets/images'
 )));
-
 app.use('/api/products', productRoutes);
-
 app.use('/api/auth', authRoutes);
-
-app.use(errorHandler); // error handling
+app.use(errorHandler);
 
 async function startServer() {
   try {

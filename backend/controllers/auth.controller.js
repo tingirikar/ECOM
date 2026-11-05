@@ -1,8 +1,12 @@
+/**
+ * auth.controller.js
+**/
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
 
-// REGISTER
+// ─── REGISTER ──────────────────────────
 export async function register(req, res) {
   const { username, password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
@@ -29,12 +33,12 @@ export async function register(req, res) {
   }
 }
 
-// LOGIN
+// ─── LOGIN ──────────────────────────
 export async function login(req, res) {
   const { username, password } = req.body;
-
   const user = await User.findOne({ username });
 
+  // if user does not exist
   if (!user) {
     return res.status(401).json({
       success: false,
@@ -42,8 +46,8 @@ export async function login(req, res) {
     });
   }
 
+  // if password doesn't match
   const match = await bcrypt.compare(password, user.password);
-
   if (!match) {
     return res.status(401).json({
       success: false,
@@ -51,15 +55,37 @@ export async function login(req, res) {
     });
   }
 
+  // user exists and password is correct => create token
   const token = jwt.sign(
     { id: user._id },       // PAYLOAD: data to put inside token
     process.env.JWT_SECRET, // SECRET
     { expiresIn: '7d' }
   )
 
+  // store the token in cookie
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+
   res.json({ 
-    success: true, 
-    token,
+    success: true,
     user: { id: user._id, username: user.username }
   });
+}
+
+// ─── LOGOUT ──────────────────────────
+export function logout(req, res) {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+  });
+
+  res.json({
+    success: true,
+    message: 'Logged out successfully'
+  })
 }

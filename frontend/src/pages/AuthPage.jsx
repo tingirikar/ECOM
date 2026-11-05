@@ -35,7 +35,7 @@ function AuthPage({ onLoginSuccess }) {
       if (isLogin) {
         const data = await loginUser(username, password);
         if (data.success) {
-          onLoginSuccess(data.user, data.token);
+          onLoginSuccess(data.user);
           navigate('/profile');
         } else {
           setError(data.message || 'Invalid credentials');
@@ -53,7 +53,7 @@ function AuthPage({ onLoginSuccess }) {
           setError(data.message || 'Registration failed');
         }
       }
-    } catch (err) {
+    } catch {
       setError('Cannot reach server. Is the backend running?');
     } finally {
       setLoading(false);

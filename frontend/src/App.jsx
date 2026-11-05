@@ -26,13 +26,13 @@ function App() {
     removeFromCart
   }  = useCart(user);
 
-  const onLoginSuccess = (userData, token) => {
-    handleLogin(userData, token);
+  const onLoginSuccess = (userData) => {
+    handleLogin(userData);
     mergeOnLogin(userData.username);
   };
 
-  const onLogout = () => {
-    handleLogout();
+  const onLogout = async () => {
+    await handleLogout();
     clearUserCart();
   };
   
